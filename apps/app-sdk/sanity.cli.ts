@@ -2,9 +2,9 @@ import {defineCliConfig} from 'sanity/cli'
 
 export default defineCliConfig({
   app: {
-    organizationId:
-      process.env.SANITY_APP_ORGANIZATION_ID || 'REPLACE_WITH_ORGANIZATION_ID',
+    organizationId: 'o1fxxii3v',
     entry: './src/App.tsx',
+    title: 'CleverForms',
     visibility: 'unlisted'
   }
 })
