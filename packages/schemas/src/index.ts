@@ -1,12 +1,16 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {cleverFormFieldTypes} from '@cleverforge/sanity-clever-forms-core'
 
-export const cleverFormFieldTypeOptions = cleverFormFieldTypes.map((value) => ({
-  title: value.charAt(0).toUpperCase() + value.slice(1),
-  value
-}))
+export interface CleverFormFieldTypeOption {
+  title: string
+  value: string
+}
 
-export interface CleverFormFieldTypeOption {title: string; value: string}
+export const cleverFormFieldTypeOptions: CleverFormFieldTypeOption[] =
+  cleverFormFieldTypes.map((value) => ({
+    title: value.charAt(0).toUpperCase() + value.slice(1),
+    value
+  }))
 
 export function registerCleverFormFieldTypes(options: CleverFormFieldTypeOption[]) {
   for (const option of options) {
