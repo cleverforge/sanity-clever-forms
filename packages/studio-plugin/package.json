@@ -20,7 +20,7 @@
     "@cleverforge/sanity-clever-forms-schemas": "workspace:*"
   },
   "peerDependencies": {
-    "react": "^19.2.0",
-    "sanity": ">=6.14.1"
+    "react": "^19.2.2",
+    "sanity": "^6.0.0"
   }
 }
