@@ -18,8 +18,8 @@ Premium capabilities live in the private `sanity-clever-forms-pro` repository an
 ## Requirements
 
 - Node.js 22.12+
-- React 19.2+
-- Sanity Studio 6.14.1+
+- React 19.2.2+
+- Sanity Studio 6+
 - @sanity/sdk-react 3+
 
 ## Packages
