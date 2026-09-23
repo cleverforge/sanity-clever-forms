@@ -18,6 +18,19 @@ export function CleverField({field, value, error, onChange}: CleverFieldProps) {
     'aria-describedby': error ? `${id}-error` : undefined
   }
 
+  if (field.type === 'heading') {
+    return <h3 data-clever-field={field.key}>{field.label}</h3>
+  }
+
+  if (field.type === 'paragraph') {
+    return (
+      <div data-clever-field={field.key}>
+        {field.label ? <strong>{field.label}</strong> : null}
+        {field.description ? <p>{field.description}</p> : null}
+      </div>
+    )
+  }
+
   let control
 
   if (field.type === 'textarea') {
@@ -42,6 +55,22 @@ export function CleverField({field, value, error, onChange}: CleverFieldProps) {
         ))}
       </select>
     )
+  } else if (field.type === 'multiselect') {
+    const selected = Array.isArray(value) ? value.map(String) : []
+    control = (
+      <select
+        {...common}
+        multiple
+        value={selected}
+        onChange={(event) =>
+          onChange(Array.from(event.currentTarget.selectedOptions).map((option) => option.value))
+        }
+      >
+        {field.choices?.map((choice) => (
+          <option key={choice.value} value={choice.value}>{choice.label}</option>
+        ))}
+      </select>
+    )
   } else if (field.type === 'radio') {
     control = (
       <div role="radiogroup" aria-labelledby={`${id}-label`}>
@@ -59,23 +88,23 @@ export function CleverField({field, value, error, onChange}: CleverFieldProps) {
         ))}
       </div>
     )
-  } else if (field.type === 'checkbox' && field.choices?.length) {
+  } else if (field.type === 'checkboxGroup') {
     const selected = Array.isArray(value) ? value.map(String) : []
     control = (
       <div>
-        {field.choices.map((choice) => (
+        {field.choices?.map((choice) => (
           <label key={choice.value}>
             <input
               type="checkbox"
               value={choice.value}
               checked={selected.includes(choice.value)}
-              onChange={(event) => {
+              onChange={(event) =>
                 onChange(
                   event.target.checked
                     ? [...selected, choice.value]
                     : selected.filter((item) => item !== choice.value)
                 )
-              }}
+              }
             />
             {choice.label}
           </label>
@@ -94,10 +123,7 @@ export function CleverField({field, value, error, onChange}: CleverFieldProps) {
   } else if (field.type === 'hidden') {
     control = <input {...common} type="hidden" value={String(value ?? field.defaultValue ?? '')} />
   } else {
-    const htmlType =
-      field.type === 'phone' ? 'tel' :
-      field.type === 'datetime' ? 'datetime-local' :
-      field.type
+    const htmlType = field.type === 'phone' ? 'tel' : field.type
 
     control = (
       <input
@@ -106,7 +132,11 @@ export function CleverField({field, value, error, onChange}: CleverFieldProps) {
         placeholder={field.placeholder}
         value={String(value ?? '')}
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
-          onChange(field.type === 'number' && event.target.value !== '' ? Number(event.target.value) : event.target.value)
+          onChange(
+            field.type === 'number' && event.target.value !== ''
+              ? Number(event.target.value)
+              : event.target.value
+          )
         }
       />
     )
