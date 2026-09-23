@@ -13,6 +13,7 @@ export interface CleverFormCustomFieldProps {
   field: CleverFormField
   value: unknown
   error?: string
+  values: Record<string, unknown>
   onChange(value: unknown): void
 }
 
@@ -109,6 +110,7 @@ export function CleverForm({
           field,
           value: values[field.key],
           error: errors[field.key],
+          values,
           onChange: (value: unknown) => {
             setValues((current) => ({...current, [field.key]: value}))
             setErrors((current) => {
