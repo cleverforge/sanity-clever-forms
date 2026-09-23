@@ -58,23 +58,26 @@ export function FormList({
       documentType: 'cleverForm'
     })
 
-    apply(
-      createDocument(handle, {
-        title: 'Untitled form',
-        status: 'draft',
-        pages: [{
-          _key: crypto.randomUUID(),
-          _type: 'cleverFormPage',
-          title: 'Page 1',
-          fields: []
-        }],
-        settings: {
-          _type: 'cleverFormSettings',
-          submitLabel: 'Submit',
-          storeSubmissions: true
-        }
-      })
-    )
+    const initialValue = {
+      title: 'Untitled form',
+      status: 'draft',
+      pages: [{
+        _key: crypto.randomUUID(),
+        _type: 'cleverFormPage',
+        title: 'Page 1',
+        fields: []
+      }],
+      settings: {
+        _type: 'cleverFormSettings',
+        submitLabel: 'Submit',
+        storeSubmissions: true
+      }
+    }
+
+    // Until Sanity TypeGen runs against a real project, the SDK cannot infer
+    // custom document fields for cleverForm. Runtime behavior follows the
+    // documented createDocument(handle, initialValues) API.
+    apply(createDocument(handle as any, initialValue as any))
 
     onSelect(handle)
   }
