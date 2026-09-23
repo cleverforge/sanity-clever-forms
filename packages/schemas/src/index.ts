@@ -1,10 +1,20 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {cleverFormFieldTypes} from '@cleverforge/sanity-clever-forms-core'
 
-const fieldTypeOptions = cleverFormFieldTypes.map((value) => ({
+export const cleverFormFieldTypeOptions = cleverFormFieldTypes.map((value) => ({
   title: value.charAt(0).toUpperCase() + value.slice(1),
   value
 }))
+
+export interface CleverFormFieldTypeOption {title: string; value: string}
+
+export function registerCleverFormFieldTypes(options: CleverFormFieldTypeOption[]) {
+  for (const option of options) {
+    if (!cleverFormFieldTypeOptions.some((existing) => existing.value === option.value)) {
+      cleverFormFieldTypeOptions.push(option)
+    }
+  }
+}
 
 export const cleverFormChoice = defineType({
   name: 'cleverFormChoice',
@@ -94,7 +104,7 @@ export const cleverFormField = defineType({
       name: 'type',
       title: 'Field type',
       type: 'string',
-      options: {list: fieldTypeOptions},
+      options: {list: cleverFormFieldTypeOptions},
       validation: (Rule) => Rule.required()
     }),
     defineField({name: 'description', title: 'Help text', type: 'text', rows: 2}),
