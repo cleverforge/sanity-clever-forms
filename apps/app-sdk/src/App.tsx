@@ -1,13 +1,14 @@
 import {useState} from 'react'
-import type {DocumentHandle} from '@sanity/sdk-react'
-import {Button, Card, Container, Flex, Heading, Stack, Text} from '@sanity/ui'
+import type {SanityConfig} from '@sanity/sdk'
+import {SanityApp, type DocumentHandle} from '@sanity/sdk-react'
+import {Button, Card, Container, Flex, Heading, Stack, Text, ThemeProvider, studioTheme} from '@sanity/ui'
 import {FormEditor} from './FormEditor.js'
 import {FormList} from './FormList.js'
 import {SubmissionList} from './SubmissionList.js'
 
 type View = 'forms' | 'submissions'
 
-export default function App() {
+function CleverFormsWorkspace() {
   const [view, setView] = useState<View>('forms')
   const [selectedForm, setSelectedForm] = useState<DocumentHandle | null>(null)
 
@@ -54,5 +55,20 @@ export default function App() {
         </Card>
       </Stack>
     </Container>
+  )
+}
+
+export default function App() {
+  const config: SanityConfig[] = [{
+    projectId: process.env.SANITY_APP_PROJECT_ID || 'REPLACE_WITH_PROJECT_ID',
+    dataset: process.env.SANITY_APP_DATASET || 'production'
+  }]
+
+  return (
+    <ThemeProvider theme={studioTheme}>
+      <SanityApp config={config} fallback={<div>Loading CleverForms…</div>}>
+        <CleverFormsWorkspace />
+      </SanityApp>
+    </ThemeProvider>
   )
 }
