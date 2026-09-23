@@ -1,22 +1,38 @@
-import {useMemo, useState, type FormEvent} from 'react'
+import {useMemo, useState, type FormEvent, type ReactNode} from 'react'
 import {
   validateFields,
   visibleFields,
   type CleverFormDefinition,
+  type CleverFormField,
   type CleverFormsTransport,
   type CleverFormSubmissionResult
 } from '@cleverforge/sanity-clever-forms-core'
 import {CleverField} from './CleverField.js'
+
+export interface CleverFormCustomFieldProps {
+  field: CleverFormField
+  value: unknown
+  error?: string
+  onChange(value: unknown): void
+}
 
 export interface CleverFormProps {
   form: CleverFormDefinition
   transport: CleverFormsTransport
   sourceUrl?: string
   locale?: string
+  renderCustomField?(props: CleverFormCustomFieldProps): ReactNode | undefined
   onSuccess?(result: CleverFormSubmissionResult): void
 }
 
-export function CleverForm({form, transport, sourceUrl, locale, onSuccess}: CleverFormProps) {
+export function CleverForm({
+  form,
+  transport,
+  sourceUrl,
+  locale,
+  renderCustomField,
+  onSuccess
+}: CleverFormProps) {
   const initialValues = useMemo(() => {
     const entries = form.pages.flatMap((page) =>
       page.fields.map((field) => [field.key, field.defaultValue ?? ''] as const)
@@ -88,22 +104,25 @@ export function CleverForm({form, transport, sourceUrl, locale, onSuccess}: Clev
       {page.title ? <h3>{page.title}</h3> : null}
       {page.description ? <p>{page.description}</p> : null}
 
-      {fields.map((field) => (
-        <CleverField
-          key={field._key || field.key}
-          field={field}
-          value={values[field.key]}
-          error={errors[field.key]}
-          onChange={(value) => {
+      {fields.map((field) => {
+        const props = {
+          field,
+          value: values[field.key],
+          error: errors[field.key],
+          onChange: (value: unknown) => {
             setValues((current) => ({...current, [field.key]: value}))
             setErrors((current) => {
               const next = {...current}
               delete next[field.key]
               return next
             })
-          }}
-        />
-      ))}
+          }
+        }
+        const custom = renderCustomField?.(props)
+        return custom !== undefined
+          ? <div key={field._key || field.key}>{custom}</div>
+          : <CleverField key={field._key || field.key} {...props} />
+      })}
 
       <div>
         {pageIndex > 0 ? (
