@@ -60,7 +60,7 @@ function CleverFormsWorkspace() {
 
 export default function App() {
   const config: SanityConfig[] = [{
-    projectId: process.env.SANITY_APP_PROJECT_ID || 'REPLACE_WITH_PROJECT_ID',
+    projectId: process.env.SANITY_APP_PROJECT_ID || 'wkojzm7r',
     dataset: process.env.SANITY_APP_DATASET || 'production'
   }]
 
