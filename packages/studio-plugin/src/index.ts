@@ -11,8 +11,9 @@ export interface CleverFormsConfig {
   fieldTypes?: CleverFormFieldTypeOption[]
 }
 
-export const cleverForms = definePlugin<CleverFormsConfig | void>((config = {}) => {
-  registerCleverFormFieldTypes(config.fieldTypes || [])
+export const cleverForms = definePlugin<CleverFormsConfig | void>((config) => {
+  const options: CleverFormsConfig = config || {}
+  registerCleverFormFieldTypes(options.fieldTypes || [])
 
   return {
     name: 'clever-forms',
