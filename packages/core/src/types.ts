@@ -1,4 +1,4 @@
-export const cleverFormFieldTypes = [
+export const cleverFormBuiltInFieldTypes = [
   'text',
   'email',
   'phone',
@@ -13,7 +13,10 @@ export const cleverFormFieldTypes = [
   'hidden'
 ] as const
 
-export type CleverFormFieldType = (typeof cleverFormFieldTypes)[number]
+export type CleverFormBuiltInFieldType = (typeof cleverFormBuiltInFieldTypes)[number]
+export type CleverFormFieldType = CleverFormBuiltInFieldType | (string & {})
+
+export const cleverFormFieldTypes = cleverFormBuiltInFieldTypes
 
 export type CleverFormOperator =
   | 'equals'
@@ -66,6 +69,7 @@ export interface CleverFormField {
   choices?: CleverFormChoice[]
   validation?: CleverFormValidationRule
   conditional?: CleverFormConditionalRule
+  config?: Record<string, unknown>
 }
 
 export interface CleverFormPage {
@@ -108,6 +112,7 @@ export interface CleverFormSubmissionResult {
   redirectUrl?: string
   message?: string
   fieldErrors?: Record<string, string>
+  data?: Record<string, unknown>
 }
 
 export interface CleverFormsTransport {
