@@ -15,30 +15,6 @@
     "jsx": "react-jsx",
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "paths": {
-      "@cleverforge/sanity-clever-forms-core": [
-        "packages/core/src/index.ts"
-      ],
-      "@cleverforge/sanity-clever-forms-schemas": [
-        "packages/schemas/src/index.ts"
-      ],
-      "@cleverforge/sanity-clever-forms-react": [
-        "packages/react/src/index.ts"
-      ],
-      "@cleverforge/sanity-clever-forms-server": [
-        "packages/server/src/index.ts"
-      ],
-      "@cleverforge/sanity-clever-forms-sanity": [
-        "packages/sanity-adapter/src/index.ts"
-      ],
-      "@cleverforge/sanity-clever-forms-templates": [
-        "packages/templates/src/index.ts"
-      ],
-      "@cleverforge/sanity-clever-forms": [
-        "packages/studio-plugin/src/index.ts"
-      ]
-    }
+    "sourceMap": true
   }
 }
