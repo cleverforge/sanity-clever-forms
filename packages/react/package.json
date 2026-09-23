@@ -1,6 +1,6 @@
 {
   "name": "@cleverforge/sanity-clever-forms-react",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
@@ -11,7 +11,9 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
@@ -27,5 +29,25 @@
   "devDependencies": {
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0"
-  }
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cleverforge/sanity-clever-forms.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/cleverforge/sanity-clever-forms#readme",
+  "bugs": {
+    "url": "https://github.com/cleverforge/sanity-clever-forms/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "sanity",
+    "forms",
+    "form-builder",
+    "cleverforms",
+    "cleverforge"
+  ]
 }
