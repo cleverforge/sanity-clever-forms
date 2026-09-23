@@ -1,16 +1,28 @@
 import {definePlugin} from 'sanity'
-import {cleverFormsSchemaTypes} from '@cleverforge/sanity-clever-forms-schemas'
+import {
+  cleverFormsSchemaTypes,
+  registerCleverFormFieldTypes,
+  type CleverFormFieldTypeOption
+} from '@cleverforge/sanity-clever-forms-schemas'
 
 export interface CleverFormsConfig {
   submissions?: boolean
   defaultLocale?: string
+  fieldTypes?: CleverFormFieldTypeOption[]
 }
 
-export const cleverForms = definePlugin<CleverFormsConfig | void>((config = {}) => ({
-  name: 'clever-forms',
-  schema: {
-    types: cleverFormsSchemaTypes
-  }
-}))
+export const cleverForms = definePlugin<CleverFormsConfig | void>((config = {}) => {
+  registerCleverFormFieldTypes(config.fieldTypes || [])
 
-export {cleverFormsSchemaTypes} from '@cleverforge/sanity-clever-forms-schemas'
+  return {
+    name: 'clever-forms',
+    schema: {
+      types: cleverFormsSchemaTypes
+    }
+  }
+})
+
+export {
+  cleverFormsSchemaTypes,
+  registerCleverFormFieldTypes
+} from '@cleverforge/sanity-clever-forms-schemas'
