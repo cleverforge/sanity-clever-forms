@@ -4,6 +4,7 @@ import {
   useEditDocument
 } from '@sanity/sdk-react'
 import {Button, Card, Flex, Heading, Label, Select, Stack, Text, TextArea, TextInput} from '@sanity/ui'
+import {FormBuilder} from './FormBuilder.js'
 
 function StringField({
   handle,
@@ -71,17 +72,11 @@ export function FormEditor({
 
           <StringField handle={handle} path="settings.submitLabel" label="Submit button label" />
           <StringField handle={handle} path="settings.successMessage" label="Success message" multiline />
+          <StringField handle={handle} path="settings.redirectUrl" label="Redirect URL" />
         </Stack>
       </Card>
 
-      <Card padding={4} radius={2} tone="caution">
-        <Stack space={2}>
-          <Heading as="h3" size={1}>Builder status</Heading>
-          <Text size={1}>
-            Core form and page schemas are active. The drag-and-drop field canvas is the next UI layer.
-          </Text>
-        </Stack>
-      </Card>
+      <FormBuilder handle={handle} />
     </Stack>
   )
 }
