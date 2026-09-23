@@ -4,7 +4,6 @@ export const cleverFormBuiltInFieldTypes = [
   'email',
   'number',
   'phone',
-  'url',
   'select',
   'multiselect',
   'radio',
@@ -12,12 +11,8 @@ export const cleverFormBuiltInFieldTypes = [
   'checkboxGroup',
   'date',
   'time',
-  'datetime',
-  'file',
-  'address',
   'heading',
   'paragraph',
-  'richText',
   'hidden'
 ] as const
 
@@ -63,18 +58,8 @@ export interface CleverFormValidationRule {
   max?: number
   pattern?: string
   message?: string
-  allowedFileTypes?: string[]
-  maxFileSizeBytes?: number
 }
 
-export interface CleverFormAddressValue {
-  line1?: string
-  line2?: string
-  city?: string
-  region?: string
-  postalCode?: string
-  country?: string
-}
 
 export interface CleverFormField {
   _key?: string
