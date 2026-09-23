@@ -21,9 +21,19 @@ interface BuilderPage {
   fields: BuilderField[]
 }
 
-const fieldTypes: CleverFormFieldType[] = [
+const builtInFieldTypes: CleverFormFieldType[] = [
   'text', 'email', 'phone', 'number', 'textarea', 'select',
   'radio', 'checkbox', 'date', 'datetime', 'url', 'hidden'
+]
+
+const configuredFieldTypes = (process.env.SANITY_APP_CLEVERFORMS_FIELD_TYPES || '')
+  .split(',')
+  .map((value) => value.trim())
+  .filter(Boolean)
+
+const fieldTypes: CleverFormFieldType[] = [
+  ...builtInFieldTypes,
+  ...configuredFieldTypes.filter((value) => !builtInFieldTypes.includes(value))
 ]
 
 function newField(type: CleverFormFieldType): BuilderField {
